@@ -1,0 +1,7 @@
+@use "./Colors" as colors;
+
+
+.success-button {
+    background-color: colors.$green-beat !important;
+    border-color: colors.$green-beat !important;
+}

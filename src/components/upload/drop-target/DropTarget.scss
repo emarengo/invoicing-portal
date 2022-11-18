@@ -1,0 +1,29 @@
+@use "../../../styles/Colors" as colors;
+
+.drop-target {
+  border: 3px dashed rgba(0, 0, 0, .125);
+  height: 200px;
+
+  &.active {
+    border-color: colors.$green-beat;
+    * {
+      pointer-events: none;
+    }
+  }
+
+  .file-input {
+    display: none;
+  }
+
+  .file-input-label {
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  .file-input-label:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+}

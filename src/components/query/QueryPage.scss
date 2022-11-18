@@ -1,0 +1,107 @@
+@use "../../styles/Colors" as colors;
+@use "../../styles/Buttons" as buttons;
+.checkbox-dropdown {
+    width: 100%;
+    border: 1px solid #aaa;
+    padding: 5px;
+    position: relative;
+    margin: 0;
+    
+    user-select: none;
+}
+
+.filter-title{
+    margin-top: -10px;
+}
+/* Display CSS arrow to the right of the dropdown text */
+.checkbox-dropdown:after {
+    content:'';
+    height: 0;
+    position: absolute;
+    width: 0;
+    border: 6px solid transparent;
+    border-top-color: #000;
+    top: 50%;
+    right: 10px;
+    margin-top: -3px;
+}
+
+/* Reverse the CSS arrow when the dropdown is active */
+.checkbox-dropdown.is-active:after {
+    border-bottom-color: #000;
+    border-top-color: #fff;
+    margin-top: -9px;
+}
+
+.checkbox-dropdown-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    z-index: 20;
+    background: white;
+    top: 100%; /* align the dropdown right below the dropdown text */
+    border: inherit;
+    border-top: 1px solid #aaa;
+    left: -1px; /* align the dropdown to the left */
+    right: -1px; /* align the dropdown to the right */
+    opacity: 0; /* hide the dropdown */
+   
+    transition: opacity 0.4s ease-in-out;
+    min-height: 90px;
+    max-height: 135px;
+    overflow: scroll;
+    overflow-x: hidden;
+    pointer-events: none; /* avoid mouse click events inside the dropdown */
+}
+.is-active .checkbox-dropdown-list {
+    opacity: 1; /* display the dropdown */
+    pointer-events: auto; /* make sure that the user still can select checkboxes */
+}
+
+.checkbox-dropdown-list li label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border-bottom: 1px solid silver;
+    padding: 10px;
+    
+    transition: all 0.2s ease-out;
+}
+
+.checkbox-dropdown-list li label:hover {
+    background-color: #555;
+    color: white;
+}
+
+.query-date-input{
+    color: #fff;
+    &:valid{
+        color: #000;
+    }
+    &::before{
+        position: absolute;
+        color: black;
+    }
+    &:focus{
+        outline: none;
+        color: black;
+    }
+    &:focus::before,
+    &:valid::before,
+    &:valid::after{
+        display: none;
+    }
+    &#startDate::before, &#endDate::before{
+        content: 'Please enter a date';
+        color: rgba(128, 128, 128, 0.527);
+    }
+    &#startDate::after{
+        display: none;
+    }
+}
+
+.asterisc-required::after{
+    content: ' *';
+    color: #ff0000;
+}

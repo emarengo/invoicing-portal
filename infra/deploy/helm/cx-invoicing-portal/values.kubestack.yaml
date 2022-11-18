@@ -1,0 +1,11 @@
+
+ingress:
+  enabled: true
+  className: public
+  path: /
+  host: SANDBOX_PLACEHOLDER-cx-invoicing-portal
+  clusterSuffix: PUBLIC_CLUSTER_PLACEHOLDER
+  annotations: {}
+
+ingressOauth:
+  enabled: false

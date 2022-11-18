@@ -1,0 +1,42 @@
+// Beat spinner
+$total-duration: 1s;
+$square-size: 60%;
+$stroke-width: 2px;
+$fill-color-empty: white;
+.spinner {
+  animation-name: spin;
+  animation-delay: 0s;
+  animation-duration: $total-duration;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  width: $square-size;
+  height: $square-size;
+  border-radius: 50%;
+  border: calc(2 * #{$stroke-width}) solid $fill-color-empty;
+  background: inherit;
+}
+
+.error {
+  text-align: center;
+  font-size: 120px;
+  font-weight: 300;
+  margin: 15px;
+  padding: 0l;
+  color: #e05038;
+}
+
+.error-description {
+  text-align: center;
+  font-size: 50px;
+  font-weight: 300;
+  margin: auto;
+  padding: 0l;
+  color: #e05038;
+}
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

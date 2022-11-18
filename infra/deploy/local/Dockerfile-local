@@ -1,0 +1,9 @@
+FROM node:16
+
+WORKDIR /app
+
+COPY local.env tsconfig.json package.json .eslintrc .eslintignore ./
+
+RUN yarn install
+
+CMD ["sh", "-c", "yarn start"]

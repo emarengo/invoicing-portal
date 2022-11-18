@@ -1,0 +1,33 @@
+groups:
+  - name: cx-invoicing-portal.rules
+    rules:
+
+      - alert: CxInvoicingPortal_PodsFrequentlyRestarting
+        expr: increase(kube_pod_container_status_restarts_total{kubernetes_pod_name=~"^cx-invoicing-portal.*"}[1h]) > 5
+        for: 10m
+        labels:
+          domain: customer-experience
+          severity: warning
+        annotations:
+          summary: "Pod is restarting frequently"
+          description: "Pod {{$labels.namespace}}/{{$labels.pod}} was restarted {{$value}} times within the last hour"
+
+      - alert: CxInvoicingPortalPerformance_HighMemoryUsage
+        expr: sum by (kubernetes_pod_name)(rate(process_resident_memory_bytes{kubernetes_pod_name=~"^cx-invoicing-portal.*"}[5m])) > 1000000000
+        for: 5m
+        labels:
+          domain: customer-experience
+          severity: critical
+        annotations:
+          summary: "High memory usage"
+          description: "Service consumes high memory (average > 1GiB) for the last minute."
+
+      - alert: CxInvoicingPortal_HighLatency
+        expr: sum(increase(cx_ticketing_request_latency_sum[5m])) / sum(increase(cx_ticketing_request_latency_count[5m])) > 0.8
+        for: 10m
+        labels:
+          domain: customer-experience
+          severity: warning
+        annotations:
+          summary: "High latency"
+          description: "The service is experiencing average latency of more than 800 ms for 10 minutes"

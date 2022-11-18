@@ -1,0 +1,94 @@
+replicaCount: 1
+
+image:
+  registry: registry.private.k8s.management.thebeat.co/beat/
+  name: cx-invoicing-portal
+  tag: helm
+  pullPolicy: Always
+
+nameOverride: ""
+fullnameOverride: ""
+changeCause: ""
+
+service:
+  type: ClusterIP
+  port: 80
+  loadBalance: true
+
+ingress:
+  host: cx-invoicing-portal
+  path: /
+  clusterSuffix: k8s.sandbox.thebeat.co
+  enabled: true
+  className: public
+  annotations: {}
+    # kubernetes.io/tls-acme: "true"
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  limits:
+   cpu: 100m
+   memory: 128Mi
+  requests:
+   cpu: 10m
+   memory: 16Mi
+
+monitoring:
+  enabled: true
+  path: /metrics
+  port: 80
+
+# This will enable blackbox exporter probes in the designated path.
+# If the probe get non 2xx responses for greater than "for:" period it will sent an alert to alertmanager
+# Alertmanager will route the notification according to severity to a slack channel or pagerduty
+blackboxProbe:
+  enabled: true
+  for: 5m
+  path: /index.html
+  severity: critical
+
+readinessProbe:
+  httpGet:
+    path: /index.html
+    port: 80
+  initialDelaySeconds: 15
+
+tracing:
+  enabled: true
+  env:
+    PATRON_JAEGER_SAMPLER_TYPE: "probabilistic"
+    PATRON_JAEGER_SAMPLER_PARAM: "0.1"
+    PATRON_JAEGER_AGENT_HOST: "$(NODE_IP)"
+    PATRON_JAEGER_AGENT_PORT: "6831"
+
+livenessProbe:
+  httpGet:
+    path: /index.html
+    port: 80
+  initialDelaySeconds: 45
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 1
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 80
+  - type: Resource
+    resource:
+      name: memory
+      targetAverageUtilization: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+mop:
+  enabled: false

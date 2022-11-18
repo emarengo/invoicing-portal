@@ -1,0 +1,25 @@
+@use "../../styles/Colors" as colors;
+@use "../../styles/Buttons.scss" as button;
+
+.upload-uuids {
+
+  .input-upload {
+    display: none;
+  }
+
+  .label-upload {
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .upload-box {
+    text-align: center;
+    border: dashed colors.$black;
+  }
+
+  .select-file {
+    text-align: center;
+    border: dashed colors.$black;
+  }
+
+}

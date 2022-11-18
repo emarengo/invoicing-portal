@@ -1,0 +1,31 @@
+$colores: red;
+@import './styles/Colors.scss';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+}
+
+.query-input-number::-webkit-outer-spin-button,
+.query-input-number::-webkit-inner-spin-button{
+  display: none;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 10px solid $light-grey;
+  border-top: 10px solid $warm-grey;
+  border-radius: 50%;
+  animation: spinner 1.8s linear infinite;
+}
